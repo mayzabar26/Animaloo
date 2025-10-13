@@ -1,0 +1,111 @@
+
+:root {
+    --font-01: 'Roboto';
+    --font-02: 'Alan Sans';
+    --font-03: 'Rubik';
+    --font-03: 'Arial';
+
+    --color-01: white;
+    --color-02: black;
+    --color-03: #4B7F52;
+    --color-04: #96E8BC;
+    --color-05: #7DD181;
+    --color-06: #C9FFE2;
+    --color-06: orange;
+    
+
+}
+
+html {scroll-behavior: smooth;}
+
+
+/************* BASIC RESET *************/
+* {box-sizing: border-box; padding: 0; margin: 0;}
+
+body{
+    font-family: var(--font-02);
+    line-height: 1.6;
+    color: var(--color-02);
+    background-color: var(--color-01);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/*a {
+    color: var(--color-02);
+    text-decoration: none;
+}*/
+
+
+/************* IMAGE *************/
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.logo-img {
+    height: 9.8rem;
+    width: auto;
+}
+
+/************* HEADER *************/
+.main-header {
+    background-color: var(--color-04);
+    padding: 0.1rem;
+    box-shadow: 0 2px 4px var(--color-03) ;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.main-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/************* MAIN CONTENT *************/
+.main-content {
+    flex-grow: 1;
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative; /*Positioning the background*/
+    width: 100%;
+    padding-top: 1.8rem;
+    padding-bottom: 1.8rem;
+}
+
+.background-box {
+    position: absolute;
+    background-color: var(--color-03);
+    top: -5rem;
+    width: 100%;
+    height: 350px;
+    z-index: -1;
+    border-top: 1px solid var(--color-03);
+    border-bottom: 1px solid var(--color-03);
+}
+
+.hero-section {
+    position: relative;
+    padding: 2rem;
+}
+
+.hero-title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--color-01);
+    line-height: 1.2;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    color: var(--color-01);
+    margin-bottom: 2rem;
+}
