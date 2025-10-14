@@ -11,7 +11,7 @@
     --color-04: #96E8BC;
     --color-05: #7DD181;
     --color-06: #C9FFE2;
-    --color-06: orange;
+    --color-07: orange;
     
 
 }
@@ -46,7 +46,7 @@ img {
 }
 
 .logo-img {
-    height: 9.8rem;
+    height: 8rem;
     width: auto;
 }
 
@@ -68,11 +68,27 @@ img {
     margin: 0 auto;
 }
 
+/************* SEACH CONTAINER *************/
+.search-container {
+    margin-left: auto;
+    display: flex; 
+    align-items: center;
+    max-width: 250px;
+}
+
+.search-container form {
+    display: flex;
+    width: 100%;
+    border: 1px solid var(--color-06);
+    border-radius: 1rem;
+    overflow: hidden;
+    background-color: var(--color-01);
+}
+
 /************* MAIN CONTENT *************/
 .main-content {
     flex-grow: 1;
     text-align: center;
-    max-width: 1200px;
     margin: 0 auto;
     position: relative; /*Positioning the background*/
     width: 100%;
@@ -85,7 +101,7 @@ img {
     background-color: var(--color-03);
     top: -5rem;
     width: 100%;
-    height: 350px;
+    height: 550px;
     z-index: -1;
     border-top: 1px solid var(--color-03);
     border-bottom: 1px solid var(--color-03);
@@ -108,4 +124,78 @@ img {
     font-size: 1.5rem;
     color: var(--color-01);
     margin-bottom: 2rem;
+}
+
+/************* HERO IMAGE *************/
+.animal-display-container {
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 1rem;
+    box-shadow: 0 8px 16px var(--color-03);
+    margin-bottom: 40px;
+}
+
+#guess-animal-hero-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/************* GUESS BUTTON *************/
+.action-btn {
+    background-color: var(--color-03);
+    color: var(--color-01);
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 0.7rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 8px var(--color-03) ;
+    text-transform: uppercase;
+}
+
+.action-btn:hover {
+    background-color: var(--color-07);
+    color: var(--color-03);
+    transform: translateY(-2px);
+}
+
+/************* FOOTER *************/
+footer {
+    background-color: var(--color-04);
+    color: var(--color-03);
+    font-weight: 700;
+    padding: 2rem;
+    text-align: center;
+    margin-top: auto;
+}
+
+#main-footer {
+    max-width: 1200px;
+    margin: 0 auto;
+    font-size: 0.9rem;
+}
+
+#main-footer p {
+    margin: 0.2rem 0;
+}
+
+.last-modified {
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+/************* MEDIA QUERIES *************/
+@media (max-width: 992px) {
+    .hero-title {font-size: 1.9rem;}
+
+    .hero-subtitle {font-size: 1.3rem;}
+}
+
+@media (max-width: 768px) {
+    
 }
