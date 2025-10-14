@@ -68,7 +68,7 @@ img {
     margin: 0 auto;
 }
 
-/************* SEACH CONTAINER *************/
+/************* SEARCH CONTAINER *************/
 .search-container {
     margin-left: auto;
     display: flex; 
@@ -85,6 +85,38 @@ img {
     background-color: var(--color-01);
 }
 
+.search-container input[type="text"] {
+    border: none;
+    padding: 0.4rem 0.8rem;
+    font-size: 1rem;
+    flex-grow: 1;
+    outline: none;
+}
+
+.search-container input[type="text"]::placeholder {
+    color: var(--color-03);
+}
+
+.search-container button {
+    background-color: var(--color-03);
+    color: var(--color-01);
+    border: none;
+    padding: 0.4rem 0.8rem;
+    margin-left: -60px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+
+.search-container button:hover {
+    background-color: var(--color-07);
+    color: var(--color-01);
+}
 /************* MAIN CONTENT *************/
 .main-content {
     flex-grow: 1;
@@ -163,6 +195,9 @@ img {
     color: var(--color-03);
     transform: translateY(-2px);
 }
+
+/************* GUESS BUTTON > MODAL *************/
+
 
 /************* FOOTER *************/
 footer {

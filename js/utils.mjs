@@ -25,3 +25,19 @@ export async function loadHeaderFooter(path) {
   renderWithTemplate(headerTemplate, headerElement);
   renderWithTemplate(footerTemplate, footerElement);
 }
+
+//Search data from APIs
+export async function getJSON(url, options = {}) {
+  try {
+    const response = await fetch(url, options);
+
+    if (!response.ok) {
+      throw new error(`HTTP Error! Status: ${response.status}. Verify if Ninjas API key is correct.`);
+    }
+
+    return await response.json();
+  } catch (e) {
+    console.error("Failed to fetch data from API:", e);
+    return { error: true, message: e.message };
+  }
+}
