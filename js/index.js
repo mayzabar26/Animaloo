@@ -16,6 +16,22 @@ let searchForm;
 let searchInput;
 
 
+//Image search on unsplash
+async function getImageUrl(query) {
+    let imageUrl = "https://via.placeholder.com/250?text=Animaloo+Image"; 
+    try {
+        const unsplashQuery = `${UNSPLASH_API_URL}?query=${query}&client_id=${UNSPLASH_ACCESS_KEY}&per_page=1`;
+        const unsplashData = await getJSON(unsplashQuery);
+
+        if (unsplashData && unsplashData.results && unsplashData.results.length > 0) {
+            imageUrl = unsplashData.results[0].urls.regular;
+        }
+    } catch (e) {
+    }
+    return imageUrl;
+}
+
+
 //Function to display modal
 function createAndShowModal(animalData) {
     //Removes any existing modal
@@ -25,7 +41,7 @@ function createAndShowModal(animalData) {
     //Variables related to info that will be displayed
     const name = animalData.name;
     const funFact = animalData.funFact;
-    const imageUrl = animalData.imageUrl || "images/placeholder-animal.png";
+    const imageUrl = animalData.imageUrl || "https://via.placeholder.com/600x400?text=Animaloo+Details";
 
     //HTML structure
     const modalHTML = `
@@ -145,7 +161,7 @@ async function searchAnimals(query) {
 }
 
 //Display list with results
-function displaySearchResults(animals, query, errorMessage) {
+async function displaySearchResults(animals, query, errorMessage) {
     //Cleans main content
     mainContent.innerHTML = '';
 
@@ -153,8 +169,15 @@ function displaySearchResults(animals, query, errorMessage) {
 
     //Display search
     if(errorMessage) {
-        htmlContent = `<h2 class="search-status-error">Search Error: ${errorMessage}<h2>`;
-    } else if (animals.length > 0) {
+        htmlContent = `<h2 class="search-status-error">Search Error: ${errorMessage}</h2>`; 
+        mainContent.innerHTML = htmlContent;
+        return;
+    } 
+    
+    if (animals.length > 0) {
+        const imagePromises = animals.map(animal => getImageUrl(animal.name));
+        const imageUrls = await Promise.all(imagePromises);
+
         const mainTitle = query.charAt(0).toUpperCase() + query.slice(1);
 
         htmlContent += `<h2 class="search-status-success">${mainTitle}</h2>`;
@@ -163,13 +186,12 @@ function displaySearchResults(animals, query, errorMessage) {
         //Looping through animals and creating cards
         htmlContent += '<div class="animal-catalog-results">';
 
-        animals.forEach(animal => {
-            const cardImageUrl = "images/placeholder-card.png";
-
+        animals.forEach((animal, index) => {
+            const cardImageUrl = imageUrls[index]; 
             htmlContent += `
                 <div class="animal-card">
                     <div class="animal-image-preview" data-animal-name="${animal.name}">
-                        <img src="${cardImageUrl}" alt="${animal.name} - Clique para ver detalhes" loading="lazy">
+                        <img src="${cardImageUrl}" alt="${animal.name} - Click to see details" loading="lazy">
                     </div>
                     
                     <h3>${animal.name}</h3>
@@ -242,8 +264,8 @@ async function handleSearch(event) {
     if (!query) return;
 
     //API Search 
-    const { data: animails, error } = await searchAnimals(query);
-    displaySearchResults(animails, query, error);
+    const { data: animals, error } = await searchAnimals(query);
+    displaySearchResults(animals, query, error);
 }
 
 

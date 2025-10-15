@@ -42,7 +42,7 @@ export async function getJSON(url, options = {}) {
     const response = await fetch(url, options);
 
     if (!response.ok) {
-      throw new error(`HTTP Error! Status: ${response.status}. Verify if Ninjas API key is correct.`);
+      throw new Error(`HTTP Error! Status: ${response.status}. Verify if Ninjas API key is correct.`);
     }
 
     return await response.json();

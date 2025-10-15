@@ -186,7 +186,7 @@ img {
     border-radius: 0.7rem;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 4px 8px var(--color-03) ;
+    box-shadow: 0 4px 8px var(--color-03);
     text-transform: uppercase;
 }
 
@@ -273,6 +273,94 @@ img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+/************* RESULTS > MODAL *************/
+/*CSS: TITLE AND STATUS*/
+.search-status-success {
+    text-align: center;
+    color: var(--color-03);
+    font-size: 2.5rem;
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.search-status-text {
+    text-align: center;
+    color: var(--color-03);
+    font-size: 1rem;
+    margin-bottom: 3rem;
+}
+
+.search-status-error {
+    text-align: center;
+    color: #e74c3c;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+}
+
+/*CARDS CONTAINER*/
+.animal-catalog-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.animal-card {
+    background-color: var(--color-03);
+    border-radius: 1.3rem;
+    box-shadow: 0 4px 8px var(--color-03);
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-align: center;
+    padding: 15px;
+    cursor: pointer;
+    border: 1px solid var(--color-02);
+}
+
+.animal-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/*TITLE: ANIMAL CARD*/
+.animal-card h3 {
+    color: var(--color-06);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/*CARD > PREVIEW*/
+.animal-image-preview {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: var(--color-04);
+    border-radius: 2rem;
+    overflow: hidden;
+    border: 3px solid white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.animal-image-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.animal-card:hover .animal-image-preview img {
+    transform: scale(1.05);
+}
+
+.animal-image-preview img[src*="placeholder-card.png"] {
+    width: 50%;
+    height: 50%;
+    object-fit: contain;
+    margin: auto;
+    display: block;
 }
 
 /************* FOOTER *************/
