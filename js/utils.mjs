@@ -13,18 +13,28 @@ export function renderWithTemplate(template, parentElement, data, callback) {
   }
 }
 
+
 //Loading header and footer from partials
 export async function loadHeaderFooter(path) {
-  const headerTemplate = await loadTemplate(`${path}/header.html`);
-  const footerTemplate = await loadTemplate(`${path}/footer.html`);
+  return new Promise(async (resolve, reject) => {
+    try {
+      const headerTemplate = await loadTemplate(`${path}/header.html`);
+      const footerTemplate = await loadTemplate(`${path}/footer.html`);
 
-  //Getting main-header and main-footer from the header.html and footer.html
-  const headerElement = document.getElementById('main-header');
-  const footerElement = document.getElementById('main-footer');
+      //Getting main-header and main-footer from the header.html and footer.html
+      const headerElement = document.getElementById('main-header');
+      const footerElement = document.getElementById('main-footer');
 
-  renderWithTemplate(headerTemplate, headerElement);
-  renderWithTemplate(footerTemplate, footerElement);
+      renderWithTemplate(headerTemplate, headerElement);
+      renderWithTemplate(footerTemplate, footerElement);
+
+      resolve();
+    } catch (e) {
+      reject(e);
+    }
+  });
 }
+
 
 //Search data from APIs
 export async function getJSON(url, options = {}) {
