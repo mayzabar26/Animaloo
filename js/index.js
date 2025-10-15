@@ -96,7 +96,7 @@ async function discoverRandomAnimal() {
     //Basic fun Fact info
     const animalName = animalData.name;
     const characteristics = animalData.characteristics;
-    const funFact = `Habitat: ${characteristics.location || 'Not informed'} | Diet: ${characteristics.diet || 'Not informed'} | Life expectancy: ${characteristics.slogan || 'Not informed'} years.`;
+    const funFact = `Habitat: ${characteristics.location || 'Not informed'} | Diet: ${characteristics.diet || 'Not informed'} | Life expectancy: ${characteristics.slogan || 'Not informed'}`;
 
     //Search image from UNSPLASH
     let imageUrl = "";
