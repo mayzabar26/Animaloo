@@ -1,12 +1,9 @@
-import { loadHeaderFooter, getJSON } from './utils.mjs';
-
-
-//Keys and Endpoints
-const UNSPLASH_ACCESS_KEY = '5BJ3aV2CiUHxA3Ghe8YlP_5LtnLd6XTw0NlwWe6nv2k';
-const API_NINJAS_FACTS_KEY = 'cu+unGV5q5kwfJS+N+RoCw==nG81P4zlgMyeLqZI';
-
-const UNSPLASH_API_URL = 'https://api.unsplash.com/search/photos';
-const API_NINJAS_URL = 'https://api.api-ninjas.com/v1/animals';
+import { 
+    loadHeaderFooter, 
+    getImageUrl,
+    getAnimalFacts,
+    searchAnimals
+} from './utils.mjs';
 
 
 //Selectors
@@ -16,23 +13,7 @@ let searchForm;
 let searchInput;
 
 
-//Image search on unsplash
-async function getImageUrl(query) {
-    let imageUrl = "https://via.placeholder.com/250?text=Animaloo+Image"; 
-    try {
-        const unsplashQuery = `${UNSPLASH_API_URL}?query=${query}&client_id=${UNSPLASH_ACCESS_KEY}&per_page=1`;
-        const unsplashData = await getJSON(unsplashQuery);
-
-        if (unsplashData && unsplashData.results && unsplashData.results.length > 0) {
-            imageUrl = unsplashData.results[0].urls.regular;
-        }
-    } catch (e) {
-    }
-    return imageUrl;
-}
-
-
-//Function to display modal
+//-----Function to display modal-----//
 function createAndShowModal(animalData) {
     //Removes any existing modal
     const existingModal = document.getElementById("animalModal");
@@ -75,36 +56,7 @@ function createAndShowModal(animalData) {
 }
 
 
-//Function to discover random animal on Ninjas API.
-async function getAnimalFacts() {
-    const searchTerms = [
-        "cat", "dog", "bird", "fish", "snake", "frog", "lion", "bear", 
-        "elephant", "monkey", "wolf", "fox", "deer", "shark", "whale"
-    ];
-    
-    const randomTermIndex = Math.floor(Math.random() * searchTerms.length);
-    const searchTerm = searchTerms[randomTermIndex];
-
-    const url = `${API_NINJAS_URL}?name=${searchTerm}`; 
-    
-    const options = {
-        method: 'GET',
-        headers: {
-            'X-Api-Key': API_NINJAS_FACTS_KEY
-        }
-    };
-
-    const data = await getJSON(url, options);
-    if (data.error || !data || data.length === 0) {
-        return { error: true, message: `No data or API error for '${searchTerm}'. (Check key or daily limit.)` };
-    }
-
-    const randomIndex = Math.floor(Math.random() * data.length);
-    return data[randomIndex];
-}
-
-
-//Main function to process animal data
+//-----Main function to process animal data-----//
 async function discoverRandomAnimal() {
     const animalData = await getAnimalFacts();
 
@@ -119,18 +71,7 @@ async function discoverRandomAnimal() {
     const funFact = `Habitat: ${characteristics.location || 'Not informed'} | Diet: ${characteristics.diet || 'Not informed'} | Life expectancy: ${characteristics.slogan || 'Not informed'}`;
 
     //Search image from UNSPLASH
-    let imageUrl = "";
-    try {
-        const unsplashQuery = `${UNSPLASH_API_URL}?query=${animalName}&client_id=${UNSPLASH_ACCESS_KEY}&per_page=1`;
-        const unsplashData = await getJSON(unsplashQuery);
-
-        if (unsplashData.results && unsplashData.results.length > 0) {
-            imageUrl = unsplashData.results[0].urls.regular;
-        }
-    } catch (e) {
-        console.warn("Failed to load image from Unsplash. Using placeholder.");
-    }
-
+    let imageUrl = await getImageUrl(animalName);
     //Display modal
     createAndShowModal({
         name: animalName,
@@ -140,27 +81,7 @@ async function discoverRandomAnimal() {
 }
 
 
-//Search results from user
-async function searchAnimals(query) {
-    if(!query) return { data: [], error: null };
-
-    const url = `${API_NINJAS_URL}?name=${encodeURIComponent(query)}`;
-
-    const options = {
-        method: 'GET',
-        headers: {
-            'X-Api-Key': API_NINJAS_FACTS_KEY
-        }
-    };
-
-    const data = await getJSON(url, options);
-    if (data.error || !data || data.length === 0) {
-        return { data: [], error: data.error ? data.message : `No animals found for "${query}".`};
-    }
-    return { data: data, error: null };
-}
-
-//Display list with results
+//-----Display list with results-----//
 async function displaySearchResults(animals, query, errorMessage) {
     //Cleans main content
     mainContent.innerHTML = '';
@@ -219,7 +140,7 @@ async function displaySearchResults(animals, query, errorMessage) {
 }
 
 
-//Search specific details from animails
+//-----Search specific details from animails-----//
 async function displaySpecificAnimalDetails(animalName) {
     //Specific search and returns animal
     const { data: animals, error } = await searchAnimals(animalName);
@@ -236,17 +157,7 @@ async function displaySpecificAnimalDetails(animalName) {
     const funFact = `Habitat: ${characteristics.location || 'Not informed'} | Diet: ${characteristics.diet || 'Not informed'} | Life expectancy: ${characteristics.slogan || 'Not informed'}`;
 
     //Search image
-    let imageUrl = "";
-    try {
-        const unsplashQuery = `${UNSPLASH_API_URL}?query=${animalNameDisplay}&client_id=${UNSPLASH_ACCESS_KEY}&per_page=1`;
-        const unsplashData = await getJSON(unsplashQuery);
-
-        if (unsplashData.results && unsplashData.results.length > 0) {
-            imageUrl = unsplashData.results[0].urls.regular;
-        }
-    } catch (e) {
-        console.warn("Failed to load image from Unsplash. Using placeholder.");
-    }
+    let imageUrl = await getImageUrl(animalNameDisplay);
 
     //Display modal
     createAndShowModal({
@@ -256,7 +167,8 @@ async function displaySpecificAnimalDetails(animalName) {
     });
 }
 
-//New handler to deal with search form submission 
+
+//-----New handler to deal with search form submission-----//
 async function handleSearch(event) {
     event.preventDefault(); //Will prevent page reload
     
@@ -269,7 +181,56 @@ async function handleSearch(event) {
 }
 
 
-//Starting listeners
+//-----Function to display the visit message and the time between visits-----//
+function displayVisitMessage() {
+    const lastVisit = localStorage.getItem('lastVisit');
+    const currentVisit = Date.now(); // Get the current timestamp
+
+    //If it's the user's first visit
+    if (!lastVisit) {
+        document.querySelector('#message-content p').textContent = 'Welcome! Let us know if you have any questions.';
+    } else {
+        //Calculate the time difference in milliseconds
+        const timeDiff = currentVisit - lastVisit;
+        const oneDay = 24 * 60 * 60 * 1000; //One day in milliseconds
+        const daysAgo = Math.floor(timeDiff / oneDay);
+
+        //Display appropriate message based on the time since the last visit
+        if (daysAgo < 1) {
+            document.querySelector('#message-content p').textContent = 'Back so soon! Awesome!';
+        } else {
+            const dayText = daysAgo === 1 ? 'day' : 'days';
+            document.querySelector('#message-content p').textContent = `You last visited ${daysAgo} ${dayText} ago.`;
+        }
+    }
+
+    //Store the current visit timestamp in localStorage
+    localStorage.setItem('lastVisit', currentVisit);
+}
+
+
+//-----Function to get and update the visitor count-----//
+function updateVisitorCount() {
+    let visitorCount = localStorage.getItem('visitorCount');
+
+    //If no visitor count is stored, initialize it
+    if (!visitorCount) {
+        visitorCount = 0;
+    }
+
+    //Increment the visitor count
+    visitorCount = parseInt(visitorCount) + 1;
+
+    //Store the updated visitor count
+    localStorage.setItem('visitorCount', visitorCount);
+
+    //Display the visitor count
+    const visitorCountElement = document.getElementById('visitor-count');
+    visitorCountElement.textContent = `Visitors: ${visitorCount}`;
+}
+
+
+//-----Starting listeners-----//
 document.addEventListener('DOMContentLoaded', async () => {
     try {
         await loadHeaderFooter('./partials');
@@ -294,16 +255,38 @@ document.addEventListener('DOMContentLoaded', async () => {
     } else {
          console.warn("Random button (ID: discoverRandomBtn) not found in the Home section.");
     }
+
+    //Implementing LocalStorage
+    displayVisitMessage();
+    updateVisitorCount();
+
+    window.addEventListener('scroll', handleScrollVisibility);
+    handleScrollVisibility();
 });
 
 
+//-----Visitor message on the screen-----//
+let messageShow = false;
 
+function handleScrollVisibility() {
+    //Caculate scroll position
+    const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrolled = window.scrollY;
 
+    //Define margin
+    const margin = 500;
 
+    //Message element
+    const messageContent = document.getElementById('message-content');
 
+    if(scrolled > scrollableHeight - margin && !messageShow) {
+        messageContent.style.display = 'block';
+        displayVisitMessage();
 
+        messageShow = true;
 
-
-
-
-
+        setTimeout(() => {
+            messageContent.style.display = 'none';
+        }, 4000);
+    }
+}

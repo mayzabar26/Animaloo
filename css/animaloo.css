@@ -12,8 +12,6 @@
     --color-05: #7DD181;
     --color-06: #C9FFE2;
     --color-07: orange;
-    
-
 }
 
 html {scroll-behavior: smooth;}
@@ -32,10 +30,7 @@ body{
     flex-direction: column;
 }
 
-/*a {
-    color: var(--color-02);
-    text-decoration: none;
-}*/
+a {color: var(--color-02); text-decoration: none;}
 
 
 /************* IMAGE *************/
@@ -45,10 +40,7 @@ img {
     display: block;
 }
 
-.logo-img {
-    height: 8rem;
-    width: auto;
-}
+.logo-img {height: 8rem; width: auto;}
 
 /************* HEADER *************/
 .main-header {
@@ -73,7 +65,8 @@ img {
     margin-left: auto;
     display: flex; 
     align-items: center;
-    max-width: 250px;
+    max-width: 400px;
+    width: 30%;
 }
 
 .search-container form {
@@ -93,9 +86,7 @@ img {
     outline: none;
 }
 
-.search-container input[type="text"]::placeholder {
-    color: var(--color-03);
-}
+.search-container input[type="text"]::placeholder {color: var(--color-03);}
 
 .search-container button {
     background-color: var(--color-03);
@@ -141,10 +132,7 @@ img {
     border-bottom: 1px solid var(--color-03);
 }
 
-.hero-section {
-    position: relative;
-    padding: 2rem;
-}
+.hero-section {position: relative; padding: 2rem;}
 
 .hero-title {
     font-size: 2.8rem;
@@ -263,9 +251,7 @@ img {
     transition: opacity 0.2s ease;
 }
 
-.close-btn:hover {
-    opacity: 1;
-}
+.close-btn:hover {opacity: 1;}
 
 .modal-content h2 {
     color: var(--color-02);
@@ -374,9 +360,7 @@ img {
     transition: transform 0.3s ease;
 }
 
-.animal-card:hover .animal-image-preview img {
-    transform: scale(1.05);
-}
+.animal-card:hover .animal-image-preview img {transform: scale(1.05);}
 
 .animal-image-preview img[src*="placeholder-card.png"] {
     width: 50%;
@@ -385,6 +369,46 @@ img {
     margin: auto;
     display: block;
 }
+
+
+/************* USER MESSAGE (COUNTER) *************/
+#message-content {
+    display: none;
+
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+
+    max-width: 300px;
+    padding: 15px 20px;
+    border-radius: 1.2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    background-color: var(--color-05);
+    border-left: 5px solid var(--color-07);
+    z-index: 1000;
+    transition: opacity 0.5s ease-in-out;
+}
+
+#message-content p.message {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.4;
+    font-family: var(--font-01);
+}
+
+#visitor-count {
+    margin-top: 5px;
+    padding-top: 5px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--color-03);
+    font-family: var(--font-01);
+    text-align: right;
+}
+
+#visitor-count::before {content: "⭐"; margin-right: 5px;}
+
 
 /************* FOOTER *************/
 footer {
@@ -402,22 +426,41 @@ footer {
     font-size: 0.9rem;
 }
 
-#main-footer p {
-    margin: 0.2rem 0;
-}
+#main-footer p {margin: 0.2rem 0;}
 
-.last-modified {
-    font-size: 1rem;
-    opacity: 0.8;
-}
+.last-modified {font-size: 1rem; opacity: 0.8;}
 
 /************* MEDIA QUERIES *************/
 @media (max-width: 992px) {
     .hero-title {font-size: 1.9rem;}
-
     .hero-subtitle {font-size: 1.3rem;}
 }
 
 @media (max-width: 768px) {
+    .hero-title {font-size: 1.3rem;}
+    .hero-subtitle {font-size: 1rem;}
+    .action-btn {margin-top: 4rem;}
     
+    .main-nav {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 0;}
+
+    .logo-link {margin-bottom: 1rem;}
+
+    .search-container {
+        width: 90%; 
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .search-container form {width: 100%;}
+
+    .modal-content h2 {font-size: 1.8rem;}
+
+    @keyframes pulse {
+        from { transform: scale(1); }
+        to { transform: scale(1); }
+    }
 }
